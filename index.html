@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Pemrograman Web Dasar Pertemuan 15 Nomor 2</title>
+</head>
+<SCRIPT LANGUAGE="JavaScript">
+function validasiMerk(inputmerk)
+{
+  panjangmerk = inputmerk.length;
+  if(panjangmerk == 0)
+  {
+    alert("Anda belum memasukkan merk semen!");
+    document.formdata.merk.focus(); }
+}
+function hitungPembelian()
+{
+  var merk = document.formdata.merk.value;
+  var harga = document.formdata.harga.value;
+  var jumlah = document.formdata.jumlah.value;
+  
+  if(merk == "")
+  {
+    alert("Merk semen harus diisi!");
+    document.formdata.merk.focus();
+    return; }
+  
+  if(harga == "" || jumlah == "")
+  {
+    alert("Harga dan jumlah pembelian harus diisi!");
+    return; }
+  harga = parseFloat(harga);
+  jumlah = parseInt(jumlah);
+  
+  var totalHarga = harga * jumlah;
+  var biayaPengiriman = 0;
+  var diskon = 0;
+  var totalBiaya = 0;
+  var keterangan = "";
+
+  if(jumlah < 10)
+  {
+    biayaPengiriman = 5000;
+    totalBiaya = totalHarga + biayaPengiriman;
+    keterangan = "Biaya pengiriman Rp. 5.000,- ditanggung pembeli"; }
+  else
+  {
+    diskon = totalHarga * 0.05;
+    totalBiaya = totalHarga - diskon;
+    keterangan = "Mendapat diskon 5% sebesar Rp. " + diskon.toLocaleString('id-ID'); }
+
+  document.getElementById("hasil").innerHTML = 
+    "<h3>Detail Pembelian:</h3>" +
+    "<p><strong>Merk Semen:</strong> " + merk + "</p>" +
+    "<p><strong>Jumlah Pembelian:</strong> " + jumlah + " Sak</p>" +
+    "<p><strong>Harga per Sak:</strong> Rp. " + harga.toLocaleString('id-ID') + "</p>" +
+    "<p><strong>Total Harga:</strong> Rp. " + totalHarga.toLocaleString('id-ID') + "</p>" +
+    "<p><strong>Keterangan:</strong> " + keterangan + "</p>" +
+    "<hr>" +
+    "<h3><strong>Total Biaya yang Harus Dibayar: Rp. " + totalBiaya.toLocaleString('id-ID') + "</strong></h3>";
+}
+    </SCRIPT>
+    </head>
+    <body>
+    <FORM NAME="formdata">
+    <h2>Program Pembelian Semen</h2>
+    <h4>Syarat:</h4>
+    <ul>
+    <li>Pembelian < 10 Sak: Biaya pengiriman Rp. 5.000,-</li>
+    <li>Pembelian ≥ 10 Sak: Diskon 5%</li>
+    </ul>
+
+    Masukkan Merk Semen:<br>
+    <INPUT TYPE="text" NAME="merk" onBlur="validasiMerk(merk.value)"><br><br>
+    Masukkan Harga per Sak:<br>
+    <INPUT TYPE="text" NAME="harga"><br><br>
+    Masukkan Jumlah Pembelian (Sak):<br>
+    <INPUT TYPE="text" NAME="jumlah"><br><br>
+    <INPUT TYPE="button" VALUE="Hitung Total" onClick="hitungPembelian()">
+    <INPUT TYPE="reset" VALUE="Reset">
+    </FORM>
+    <div id="hasil"></div>
+</body>
+</html>
